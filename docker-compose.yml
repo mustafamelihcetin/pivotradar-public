@@ -1,0 +1,160 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: pivot-radar-redis
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru --save ""
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.11.3
+    container_name: pivot-radar-mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:////mlruns/mlflow.db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/mlruns/artifacts
+    volumes:
+      - mlflow_data:/mlruns
+    restart: unless-stopped
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:////mlruns/mlflow.db
+      --default-artifact-root /mlruns/artifacts
+      --host 0.0.0.0
+
+  db:
+    image: postgres:16-alpine
+    container_name: pivot-radar-db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-pivot_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-pivot_pass}
+      - POSTGRES_DB=${POSTGRES_DB:-pivotradar}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
+      - ./scripts/pg_backup.sh:/scripts/pg_backup.sh:ro
+      - db_backups:/backups
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pivot_user} -d ${POSTGRES_DB:-pivotradar}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pivot-radar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID:-}
+        - VITE_API_BASE=${VITE_API_BASE:-}
+        - VITE_TURNSTILE_SITE_KEY=${VITE_TURNSTILE_SITE_KEY:-}
+    container_name: pivot-radar-terminal
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${HOST_PORT:-80}:8051"
+    volumes:
+      - ./backend/app:/app/backend/app
+      - ./backend/app/static:/app/static
+      - ./gunicorn.conf.py:/app/backend/gunicorn.conf.py:ro
+      - ./backend/tests:/app/tests
+      - ./backend/migrations:/app/migrations
+      - ./data:/app/data
+      - ./assets:/app/assets
+      - ./models:/app/models
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-pivot_user}:${POSTGRES_PASSWORD:-pivot_pass}@db/${POSTGRES_DB:-pivotradar}
+      - PYTHONPATH=/app
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MLFLOW_EXTERNAL_URL=${MLFLOW_EXTERNAL_URL:-http://localhost:5000}
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          memory: 768M
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8051/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  db-backup:
+    image: postgres:16-alpine
+    container_name: pivot-radar-backup
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - PGPASSWORD=${POSTGRES_PASSWORD:-pivot_pass}
+      - POSTGRES_USER=${POSTGRES_USER:-pivot_user}
+      - POSTGRES_DB=${POSTGRES_DB:-pivotradar}
+    volumes:
+      - db_backups:/backups
+    restart: unless-stopped
+    entrypoint: >
+      sh -c "
+        while true; do
+          TIMESTAMP=$$(date +\"%Y%m%d_%H%M%S\");
+          FILENAME=\"/backups/pivotradar_$${TIMESTAMP}.sql.gz\";
+          pg_dump -h db -U $${POSTGRES_USER} $${POSTGRES_DB} | gzip > \"$$FILENAME\" && echo \"[backup] OK: $$FILENAME ($$(du -sh $$FILENAME | cut -f1))\" || echo \"[backup] FAILED at $$TIMESTAMP\";
+          find /backups -name 'pivotradar_*.sql.gz' -mtime +7 -delete;
+          echo \"[backup] Kalan backup sayisi: $$(find /backups -name 'pivotradar_*.sql.gz' | wc -l)\";
+          sleep 86400;
+        done
+      "
+
+  pivot-radar-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["test"]
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend/app:/app/backend/app
+      - ./backend/tests:/app/tests
+      - ./backend/migrations:/app/migrations
+      - ./data:/app/data
+      - ./models:/app/models:ro
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-pivot_user}:${POSTGRES_PASSWORD:-pivot_pass}@db/pivotradar_test
+      - PYTHONPATH=/app
+      - ENVIRONMENT=test
+      - SECRET_KEY=test-secret-key-not-for-production
+      - SMTP_HOST=
+      - PR_W_RULE=0.6
+      - PR_W_ML=0.4
+    command: ["python", "-m", "pytest", "tests/", "-ra", "-q", "--tb=short", "--cov=app", "--cov-report=term-missing", "--cov-fail-under=70"]
+
+volumes:
+  postgres_data:
+  db_backups:
+  mlflow_data:
+  redis_data:

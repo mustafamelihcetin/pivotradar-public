@@ -1,0 +1,20 @@
+[tool.pyright]
+include = ["backend", "."]
+extraPaths = ["backend", "backend/app"]
+reportMissingImports = "none"
+reportMissingModuleSource = "none"
+typeCheckingMode = "off"
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+testpaths = ["backend/tests"]
+addopts = "-ra -q"
+
+[tool.coverage.run]
+source = ["backend/app"]
+omit = ["*/tests/*", "*/migrations/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
+skip_covered = false

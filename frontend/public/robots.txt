@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /terminal
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://pivot-radar.com/sitemap.xml

@@ -1,0 +1,487 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* IBM Plex Mono — tabular figures for all monospace elements */
+.font-mono,
+[class*="font-mono"],
+[style*="IBM Plex Mono"],
+[style*="monospace"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ambientDrift {
+  from { transform: translate(-50%, -50%) translate(0px, 0px); }
+  to   { transform: translate(-50%, -50%) translate(60px, 40px); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body, #root {
+  min-height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  background-color: #05070a;
+  /* Klasik Koordinat Izgarası */
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-attachment: fixed;
+}
+
+/* Mobilde background-attachment:fixed iOS/Android'de parallax kaymasına yol açar */
+@media (max-width: 768px), (hover: none) {
+  html, body, #root {
+    background-attachment: scroll;
+  }
+}
+
+/* ── Global scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.12); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.25); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+.custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.12); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.25); }
+
+/* ── Admin range slider (.pr-slider) thumb ───────────────────── */
+.pr-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; border: 2px solid #07090e;
+  box-shadow: 0 0 6px rgba(153,247,255,0.6); cursor: pointer;
+}
+.pr-slider::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; border: 2px solid #07090e;
+  box-shadow: 0 0 6px rgba(153,247,255,0.6); cursor: pointer;
+}
+
+/* ── Select / dropdown — global dark theme ───────────────────── */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px !important;
+}
+/* Option panel styling (Chromium-only) */
+select option {
+  background-color: #10141e;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  padding: 8px 12px;
+}
+select option:hover,
+select option:checked {
+  background-color: rgba(34,211,238,0.15);
+  color: #22d3ee;
+}
+
+/* ── Autocomplete list ───────────────────────────────────────── */
+.pr-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: #10141e;
+  border: 1px solid rgba(34,211,238,0.18);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 9999;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.7);
+  max-height: 200px;
+  overflow-y: auto;
+}
+.pr-autocomplete-item {
+  padding: 9px 14px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.1s;
+}
+.pr-autocomplete-item:last-child { border-bottom: none; }
+.pr-autocomplete-item:hover, .pr-autocomplete-item.active {
+  background: rgba(34,211,238,0.08);
+  color: #22d3ee;
+}
+
+/* Logo drag/save protection */
+img[src*="icon.png"],
+img[src*="pivotradar_logo"] {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+/* Re-enable pointer events only where logos are clickable links */
+a img[src*="icon.png"],
+a img[src*="pivotradar_logo"],
+button img[src*="icon.png"],
+button img[src*="pivotradar_logo"] {
+  pointer-events: auto;
+}
+
+/* ── Glass card system ────────────────────────────────────────────── */
+.card {
+  background: #111520;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: background 0.2s, border-color 0.2s;
+}
+.card:hover {
+  background: #141820;
+  border-color: rgba(34, 211, 238, 0.22);
+}
+.card-inner {
+  background: #141820;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+}
+
+/* Plotly chart container — matches theme */
+.js-plotly-plot .plotly .bg {
+  fill: transparent !important;
+}
+.js-plotly-plot .plotly .main-svg {
+  background: transparent !important;
+}
+
+@layer utilities {
+  .glass {
+    background: #111520;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .transparent-glass {
+    background: #090b0f;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  /* Touch/Tablet Performance Polish (V20) */
+  @media (hover: none) {
+    .glass {
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      background: rgba(29, 32, 37, 0.7); /* Slightly more opaque to compensate */
+    }
+    .transparent-glass {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .glow-primary {
+      box-shadow: 0 4px 10px rgba(0, 242, 255, 0.1);
+    }
+    
+    /* Global blur caps for performance */
+    .backdrop-blur-3xl, .backdrop-blur-2xl, .backdrop-blur-xl, .backdrop-blur-lg {
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+    }
+    .backdrop-blur-md, .backdrop-blur-sm, .backdrop-blur {
+      backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
+    }
+  }
+
+  .accelerate {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .terminal-grid {
+    background-image: 
+        linear-gradient(to right, rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .glow-soft {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 255, 0.05);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+  }
+
+  .glass-panel {
+    background: rgba(13, 16, 21, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 242, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  }
+
+  .aether-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, rgba(20, 24, 30, 0.8) 0%, rgba(13, 16, 21, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .aether-card:hover {
+    border-color: rgba(0, 242, 255, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px -10px rgba(0, 242, 255, 0.2);
+  }
+
+  .gradient-text {
+    background: linear-gradient(to right, #00F2FF 0%, #70FDFF 50%, #00F2FF 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-pulse 4s linear infinite;
+  }
+
+  .terminal-status-glow {
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.5), 0 0 20px rgba(0, 242, 255, 0.2);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+  }
+  .terminal-scroll::-webkit-scrollbar { width: 4px; }
+  .terminal-scroll::-webkit-scrollbar-track { background: #0c0e12; }
+  .terminal-scroll::-webkit-scrollbar-thumb { background: #1d2025; border-radius: 10px; }
+
+  .pulse-border { animation: pulse-glow 2s infinite; }
+
+  @keyframes text-pulse {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+}
+
+@layer components {
+  /* CUSTOM CONTROLS */
+  .profile-pill {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+  }
+  .profile-pill:hover {
+      background-color: rgba(29, 32, 37, 0.5);
+      color: white;
+  }
+  .profile-pill.active {
+      background-color: rgba(34, 211, 238, 0.1);
+      color: #22d3ee;
+      border-left-color: #22d3ee;
+  }
+
+  .topn-pill {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.2s ease;
+  }
+  .topn-pill:hover {
+      background-color: rgba(0, 242, 255, 0.1);
+      color: #22d3ee;
+  }
+  .topn-pill.active {
+      background-color: rgba(0, 242, 255, 0.15);
+      color: #22d3ee;
+      font-weight: 600;
+      box-shadow: inset 0 0 0 1px rgba(0, 242, 255, 0.4);
+  }
+
+  .toggle-switch-input:checked + .toggle-switch-bg {
+      background-color: rgba(0, 242, 255, 0.2);
+  }
+  .toggle-switch-input:checked + .toggle-switch-bg > .toggle-switch-knob {
+      transform: translateX(18px);
+      background-color: #22d3ee;
+  }
+  .toggle-switch-bg {
+      width: 40px;
+      height: 22px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+  }
+  .toggle-switch-knob {
+      width: 16px;
+      height: 16px;
+      background-color: rgba(255, 255, 255, 0.4);
+      border-radius: 9999px;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: all 0.3s ease;
+  }
+
+  /* animate-in utility classes (tailwindcss-animate replacement) */
+  .animate-in {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+  }
+  .fade-in {
+    animation-name: fadeIn;
+  }
+  .slide-in-from-right-8 {
+    animation-name: slideInFromRight;
+  }
+  .slide-in-from-bottom-4 {
+    animation-name: slideInFromBottom;
+  }
+  .slide-in-from-bottom-2 {
+    animation-name: slideInFromBottomSm;
+  }
+  .duration-500 { animation-duration: 0.5s; }
+  .duration-700 { animation-duration: 0.7s; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(2rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInFromBottom {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromBottomSm {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 242, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); }
+}
+
+/* ── Radar sweep — PivotRadar marka animasyonu ──────────────────── */
+/* GPU-hızlandırılmış transform, opacity animasyonu yok → düşük CPU */
+@keyframes radar-sweep {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Çok yavaş kayan yatay veri çizgisi (fiyat grafiği hissi) */
+@keyframes data-drift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes ping-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.25); }
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #1d2025;
+    border-top-color: #00F2FF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.spinner-large {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #1d2025;
+    border-top-color: #00F2FF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes marquee {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+  animation: marquee 120s linear infinite; /* Much slower for institutional-grade stability */
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.ticker-container {
+  width: 100%;
+  overflow: hidden;
+  contain: layout style size;
+  isolation: isolate;
+  background: rgba(13, 15, 20, 0.4);
+}
+
+.animate-marquee * {
+  pointer-events: none;
+  contain: content;
+}
+
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to { background-position: 800px 800px; }
+}
+
+@keyframes orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateY(800px); opacity: 0; }
+}

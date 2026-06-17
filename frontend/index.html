@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="tr" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230f172a'/%3E%3Cstop offset='100%25' stop-color='%23020617'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23a5f3fc'/%3E%3Cstop offset='50%25' stop-color='%2322d3ee'/%3E%3Cstop offset='100%25' stop-color='%230891b2'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='3' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23bg)'/%3E%3Crect width='100' height='100' rx='22' fill='none' stroke='%2322d3ee' stroke-width='2' opacity='0.25'/%3E%3Cg transform='skewX(-8) translate(10,0)' filter='url(%23glow)'%3E%3Crect x='25' y='25' width='16' height='50' rx='3' fill='url(%23c)'/%3E%3Crect x='31' y='10' width='4' height='19' rx='2' fill='url(%23c)'/%3E%3Crect x='31' y='71' width='4' height='19' rx='2' fill='url(%23c)'/%3E%3Cpath d='M 39 32 C 82 28 82 68 39 68' stroke='url(%23c)' stroke-width='13' stroke-linecap='round' fill='none'/%3E%3C/g%3E%3C/svg%3E" />
+    <link rel="icon" type="image/png" href="/pwa-icon.png" sizes="48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/pwa-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <meta name="google-site-verification" content="GOOGLE_KODUNU_BURAYA_YAPISTIR" />
+
+    <!-- Primary SEO -->
+    <title>PivotRadar | Borsa Analiz Terminali</title>
+    <meta name="description" content="BIST hisseleri için yapay zeka destekli quant analiz terminali." />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pivot-radar.com/" />
+    <meta property="og:title" content="Borsa Analizi & BIST Hisse Tarama | PivotRadar v4.5 PRO" />
+    <meta property="og:description" content="BIST ekosisteminde saniyede 4,200 veri noktasını işleyen, ML skorlamalı ve profesyonel teknik projeksiyonlu quant analiz terminali." />
+    <meta property="og:image" content="https://pivot-radar.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="PivotRadar BIST Analiz Terminali" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content="PivotRadar" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@pivotradar" />
+    <meta name="twitter:creator" content="@pivotradar" />
+    <meta name="twitter:title" content="PivotRadar v4.5 PRO — Neural-Quant BIST Terminali" />
+    <meta name="twitter:description" content="500+ BIST hissesini ML skoru ve profesyonel teknik göstergelerle tarayan profesyonel analiz terminali. Yatırım tavsiyesi değildir." />
+    <meta name="twitter:image" content="https://pivot-radar.com/og-image.png" />
+    <meta name="twitter:image:alt" content="PivotRadar BIST Hisse Tarayıcı" />
+
+    <!-- Theme / PWA hints -->
+    <meta name="theme-color" content="#090b0f" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="application-name" content="PivotRadar" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PivotRadar" />
+
+    <!-- Structured Data — WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PivotRadar",
+      "alternateName": ["PivotRadar BIST Tarayıcı", "PivotRadar Quant Terminal", "Pivot Radar"],
+      "description": "Borsa İstanbul (BIST) hisselerini matematiksel yöntemler ve yapay zeka ile tarayan profesyonel algoritmik analiz terminali. Yatırım tavsiyesi vermez; veriler gecikmeli olabilir.",
+      "url": "https://pivot-radar.com",
+      "applicationCategory": "FinanceApplication",
+      "applicationSubCategory": "StockScreener",
+      "operatingSystem": "Web Browser",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TRY",
+        "availability": "https://schema.org/InStock",
+        "description": "Profesyonel kullanım"
+      },
+      "featureList": [
+        "500+ BIST hissesi tarama",
+        "Makine öğrenmesi QRS skorlama",
+        "RSI, EMA, MACD, Bollinger Bantları analizi",
+        "8 farklı strateji profili (Swing, Trend, Scalper, Kırılım)",
+        "Fibonacci geri çekilme seviyeleri",
+        "Gerçek zamanlı kırılım sinyalleri",
+        "Backtest motoru",
+        "Yapay zeka teknik analiz yorumu"
+      ],
+      "inLanguage": "tr",
+      "isAccessibleForFree": true,
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Bireysel Yatırımcı, Swing Trader, Teknik Analist"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "PivotRadar",
+        "url": "https://pivot-radar.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "info@pivotradar.net",
+          "contactType": "customer support",
+          "availableLanguage": "Turkish"
+        }
+      }
+    }
+    </script>
+
+    <!-- Structured Data — Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "PivotRadar",
+      "url": "https://pivot-radar.com",
+      "logo": "https://pivot-radar.com/icon.png",
+      "description": "BIST hisselerini algoritmik analiz ve yapay zeka ile tarayan Türkiye'nin quant finans terminali.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@pivotradar.net",
+        "contactType": "customer support",
+        "availableLanguage": "Turkish"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Structured Data — FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "PivotRadar nedir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PivotRadar, Borsa İstanbul (BIST) hisselerini makine öğrenmesi ve algoritmik teknik analiz ile tarayan profesyonel bir quant finans terminalidir. Yatırım tavsiyesi vermez."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PivotRadar ücretsiz mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, PivotRadar'ın temel özelliklerini kullanmak tamamen ücretsizdir. Hesap oluşturarak profesyonel terminale erişebilirsiniz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PivotRadar hangi BIST hisselerini analiz eder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PivotRadar, BIST'te işlem gören 500'den fazla hisseyi RSI, EMA, MACD, Bollinger Bantları, Fibonacci ve ML skorlama ile analiz eder."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PivotRadar yatırım tavsiyesi veriyor mu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hayır. PivotRadar yatırım tavsiyesi vermez, SPK lisanslı bir danışmanlık hizmeti değildir. Tüm analizler teknik gösterge tabanlıdır ve yalnızca bilgilendirme amaçlıdır."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Dynamic canonical — prevents duplicate-content flags for SPA routes -->
+    <script>
+    (function(){
+      var l=document.createElement('link');
+      l.rel='canonical';
+      var p=window.location.pathname.replace(/\/+$/,'')||'/';
+      l.href='https://pivot-radar.com'+p;
+      document.head.appendChild(l);
+    })();
+    </script>
+
+    <!-- Material Symbols: self-hosted, preloaded before JS so icons appear immediately -->
+    <link rel="preload" href="/material-symbols-outlined.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Google Fonts (Outfit + Plus Jakarta Sans): non-blocking -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Plotly self-hosted: /plotly.min.js (cdn.plot.ly bağımlılığı kaldırıldı) -->
+
+    <style>
+      /* Critical CSS — inlined to eliminate render-blocking delay */
+      body { min-height: 100vh; min-height: 100dvh; background: #05070a; color: #fff; }
+      html, body, #root { min-height: 100%; width: 100%; margin: 0; padding: 0; overflow-x: hidden; background-color: #05070a; }
+      html { scroll-behavior: smooth; }
+      ::-webkit-scrollbar { width: 5px; height: 5px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.12); border-radius: 10px; }
+      /* Material Symbols: self-hosted, public klasöründen (preload ile HTML parse anında başlar) */
+      @font-face {
+        font-family: 'Material Symbols Outlined';
+        font-style: normal;
+        font-weight: 100 700;
+        font-display: block;
+        src: url('/material-symbols-outlined.woff2') format('woff2');
+        font-named-instance: 'Regular';
+      }
+      .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-feature-settings: 'liga';
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body selection:bg-primary/30 overflow-x-hidden flex flex-col">
+    <div id="root" class="h-full w-full flex flex-col" role="main" aria-label="PivotRadar Terminal Application"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

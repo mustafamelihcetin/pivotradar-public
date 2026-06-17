@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+  <defs>
+    <linearGradient id="piG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a5f3fc" />
+      <stop offset="50%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#0891b2" />
+    </linearGradient>
+  </defs>
+  <g transform="skewX(-8) translate(8,0)">
+    <rect x="25" y="25" width="18" height="50" rx="3" fill="url(#piG)" />
+    <rect x="32" y="10" width="4" height="20" rx="2" fill="url(#piG)" />
+    <rect x="32" y="70" width="4" height="20" rx="2" fill="url(#piG)" />
+    <path d="M 40 32 C 85 28 85 68 40 68" stroke="url(#piG)" stroke-width="14" stroke-linecap="round" fill="none" />
+  </g>
+</svg>

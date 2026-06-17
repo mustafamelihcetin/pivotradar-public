@@ -1,0 +1,57 @@
+# docker-compose.prod.yml — Production override
+# Kullanım: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Bu dosya yalnızca PROD'a özgü ayarları override eder:
+#   - Bind-mount'lar kaldırılır (immutable image kullanılır)
+#   - Restart politikaları güçlendirilir
+#   - Kaynak limitleri production değerlerine çekilir
+
+services:
+  redis:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          memory: 128M
+
+  db:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  pivot-radar:
+    build:
+      args:
+        - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID:-}
+        - VITE_API_BASE=${VITE_API_BASE:-}
+        - VITE_TURNSTILE_SITE_KEY=${VITE_TURNSTILE_SITE_KEY:-}
+    # Production'da kaynak kodu bind-mount YOK — image içinde sabit
+    volumes:
+      - ./data:/app/data
+      - ./assets:/app/assets
+      - ./models:/app/models
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - GUNICORN_WORKERS=4
+      - REDIS_URL=redis://redis:6379/0
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"

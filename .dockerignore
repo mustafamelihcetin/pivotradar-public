@@ -1,0 +1,47 @@
+# Git
+.git
+.gitignore
+
+# Virtual Environment
+.venv
+.venv_new
+env
+venv
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Project Cache & Logs
+cache/
+logs/
+runtime/
+*.log
+_*.txt
+
+# Build Artifacts
+build/
+dist/
+*.spec
+py-portable/
+installer/
+
+# Local Dev
+.gemini/
+.spinner/
+.env
+.env.local
+.env.*.local
+
+# Windows-only stuff
+*.bat
+*.cmd
+*.ps1
+
+# Node
+node_modules/
+frontend/node_modules/
+# frontend/dist/  <-- REMOVED so Docker can copy the local build

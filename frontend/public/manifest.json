@@ -1,0 +1,26 @@
+{
+  "short_name": "PivotRadar",
+  "name": "PivotRadar Quant Terminal",
+  "icons": [
+    {
+      "src": "favpwa-icon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "pwa-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "pwa-icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#090b0f",
+  "background_color": "#05070a"
+}

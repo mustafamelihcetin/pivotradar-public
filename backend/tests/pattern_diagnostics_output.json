@@ -1,0 +1,83 @@
+[
+  {
+    "symbol": "ASELS.IS",
+    "pattern": "Formasyon Yok",
+    "confidence": 0.0,
+    "debug": {
+      "lookback_bars": 120,
+      "pivot_order": 5,
+      "pivot_high_count": 6,
+      "pivot_low_count": 6,
+      "atr_14": 17.1071,
+      "price_scale": 216.53,
+      "classification": {
+        "pattern_type": "NONE",
+        "pattern_label": "Formasyon Yok",
+        "confidence": 0.0,
+        "convergence_ratio": null,
+        "validation_passed": false,
+        "rejection_reason": "no_valid_lines"
+      },
+      "validation_checks": {
+        "upper_touch_ok": true,
+        "lower_touch_ok": true,
+        "pattern_downgrade_applied": true,
+        "no_nan_values": true
+      }
+    }
+  },
+  {
+    "symbol": "THYAO.IS",
+    "pattern": "Formasyon Yok",
+    "confidence": 0.0,
+    "debug": {
+      "lookback_bars": 120,
+      "pivot_order": 5,
+      "pivot_high_count": 9,
+      "pivot_low_count": 7,
+      "atr_14": 8.1607,
+      "price_scale": 296.72,
+      "classification": {
+        "pattern_type": "NONE",
+        "pattern_label": "Formasyon Yok",
+        "confidence": 0.0,
+        "convergence_ratio": null,
+        "validation_passed": false,
+        "rejection_reason": "no_valid_lines"
+      },
+      "validation_checks": {
+        "upper_touch_ok": true,
+        "lower_touch_ok": true,
+        "pattern_downgrade_applied": true,
+        "no_nan_values": true
+      }
+    }
+  },
+  {
+    "symbol": "AKBNK.IS",
+    "pattern": "Formasyon Yok",
+    "confidence": 0.0,
+    "debug": {
+      "lookback_bars": 120,
+      "pivot_order": 5,
+      "pivot_high_count": 3,
+      "pivot_low_count": 5,
+      "atr_14": 3.5429,
+      "price_scale": 66.82,
+      "classification": {
+        "pattern_type": "NONE",
+        "pattern_label": "Formasyon Yok",
+        "confidence": 0.0,
+        "convergence_ratio": null,
+        "validation_passed": false,
+        "rejection_reason": "no_valid_lines"
+      },
+      "validation_checks": {
+        "upper_touch_ok": true,
+        "lower_touch_ok": true,
+        "pattern_downgrade_applied": true,
+        "no_nan_values": true
+      }
+    }
+  }
+]
